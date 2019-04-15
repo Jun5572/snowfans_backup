@@ -1,0 +1,145 @@
+<!-- loading画面 バーと％表示 -->
+<div class="loading" data-js="loading">
+	<div class="loading-inner">
+		<div class="loading-contents">
+			<div class="loading-count" data-js="loading-count">0%</div>
+			<div class="loading-meter" data-js="loading-meter"></div>
+		</div>
+	</div>
+</div>
+
+
+<script>
+//処理を一時止める
+//  event.preventDefault();
+
+	$(function(){
+		let count = 0; //loadingのパーセンテージ
+		let $images = $('img');
+		let $loading = $('[data-js="loading"]')
+		let $loading_count = $('[data-js="loading-count"]');
+		let $loading_meter = $('[data-js="loading-meter"]');
+
+		if($images.length){
+			//画像があったら
+			let image_length = $images.length;
+			// console.log(image_length);
+			//
+			for ( let i=0; i<image_length; i++){
+				let img = new Image();
+				let src = $images.eq(i).attr('src');
+				$(img).on('load', function(){
+					count++;
+				});
+				$(img).on('error', function(){
+					count++;
+				});
+				img.src = src;
+			}
+			console.log(count);
+			//一定期間で読み込みを監視する
+			let timer = setInterval(function(){
+				let current_rate = Math.floor(count / image_length * 100);
+				$loading_count.text(`${current_rate}%`);
+				//scaleを使ってscale-originをleftに設定すれば左端から伸びるバーができる。
+				$loading_meter.css('transform', `scaleX(${current_rate / 100})`);
+				// console.log(current_rate);
+				if(current_rate === 100){
+					clearInterval(timer);
+					setTimeout(function(){
+     					$('[data-js="loading-count"]').fadeOut(500);
+     					$('[data-js="loading-meter"]').fadeOut(500);
+     					$('[data-js="loading-background"]').fadeOut(500);
+					},1000);
+					$loading.addClass('is-hidden');
+				}
+			}, 10);
+		} else {
+			//画像がなかったらimgタグがなかったら
+			let current_rate = 100;
+				$loading_count.text(`${current_rate}%`);
+				$loading_meter.css('transform', `scaleX(${current_rate / 100})`);
+				$loading.addClass('is-hidden');
+
+		}
+	});
+</script>
+
+<style>
+	/* loading全体 */
+	.loading{
+		position: fixed;
+		width: 300%;
+		height: 300%;
+		top: -100%;
+		left: -100%;
+		z-index: 10000;
+		transform: rotateZ(45deg);
+		will-change: transform;
+	}
+	.loading.is-hidden{
+		pointer-events: none;
+	}
+	/* loadingの中身 */
+	.loading .loading-inner{
+		width: 100%;
+		height: 100%;
+		background-color: #111;
+		color: #fff;
+		overflow: hidden;
+		transition: transform 2000ms 1500ms;
+	}
+	/* loading終了 */
+	.loading.is-hidden .loading-inner{
+		transform: translate3d(-100%, 0, 0);
+	}
+
+
+	.loading .loading-inner .loading-contents{
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		margin: auto;
+		width: 100%;
+		height: 200px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		transform: rotateZ(-45deg);
+		transition: transform 2000ms 1500ms;
+	}
+	.loading.is-hidden .loading-inner .loading-contents{
+		transform: translate3d(100%, 0, 0) rotateZ(-45deg);
+	}
+	.loading .loading-inner .loading-contents img{
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		transform: scale(1.5);
+		margin: auto;
+		/*opacity: 0.1;*/
+	}
+	/* loadingの中身 -パーセント表示部-*/
+	.loading .loading-inner .loading-contents .loading-count{
+
+	}
+
+	/* loadingの中身 -ローディングバー-*/
+	.loading .loading-inner .loading-contents .loading-meter{
+		width: 0%;
+		height: 1em;
+		background-color: orangered;
+		/*background-image: url("/images/polygon-background2.jpg");*/
+		transform-origin: left;
+		transform: scaleX(0);
+		width: 100vw;
+		height: 0.25em;
+		transition: transform 200ms;
+	}
+</style>
+

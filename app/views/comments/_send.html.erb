@@ -1,0 +1,13 @@
+<div class="reception-wrapper">
+	<div class="send-date">
+		<div><%= comment.created_at.strftime("%-m月%-d日") %></div>
+		<div><%= comment.created_at.strftime("%-H:%M") %></div>
+		<%= link_to comment_path(comment.id), method: :delete, data: { confirm: "削除します。よろしいですか？"} do %>
+			<div class="far fa-trash-alt fa-lg fa-fw trashbox"></div>
+		<% end %>
+	</div>
+	<div class="comment reception">
+		<p><%= auto_link(simple_format(comment.body), html: { target: "_blank"}) %></p>
+	</div>
+		<%#= link_to image_tag(comment.user.thumbnail_id.gsub(/_normal/, ""), class: "user-icon"), "#{comment.user.provider_url}", target: "_blank" %>
+</div>

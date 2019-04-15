@@ -1,0 +1,110 @@
+<div class="image-wrapper">
+  <img class="sign-in-background" src="/images/sample-image.jpg">
+</div>
+
+<div class="form-box">
+  <p>みんなで滑ろう！</p>
+  <div class="sign-up-title entrance-font"><span>S</span>now<span>f</span>ans</div>
+  <%= link_to user_twitter_omniauth_authorize_path, class: "sns-button twitter box-shadow" do %>
+    <p class="entrance-font"><i class="fab fa-twitter"></i>twitter</p>
+  <% end %>
+  <%= link_to user_facebook_omniauth_authorize_path, class: "sns-button facebook box-shadow" do %>
+    <p class="entrance-font"><i class="fab fa-facebook-f"></i>facebook</p>
+  <% end %>
+</div>
+
+<div class="bottom-area">
+  <p class="whats entrance-font"><a href="#about">What's Snowfans?</a></p>
+</div>
+
+<div class="about-box">
+  <i id="about" class="fas fa-snowboarding"></i>
+  <h2 class="about">みんなで滑ろう！</h2>
+  <div class="about-text">
+    <p>Snowfansは、スキーやスノーボード行きたい！練習したい！けど一緒に行く人がいない！
+    一人で滑るのは寂しいから、誰かと一緒に滑りたい！
+    セッションしてみたい！そんな気持ちに答えるアプリです！
+    </p>
+  </div>
+</div>
+
+<div class="app-introduction">
+  <div class="app-intro">
+    <img class="app-intro-img1" src="/images/exam-1.png">
+    <div class="app-intro-text"><p>自分が滑りに行きたい日付とゲレンデがあるエリアを指定して予定（イベント）を投稿しよう！</p></div>
+  </div>
+  <div class="app-intro">
+    <img class="app-intro-img1" src="/images/exam-2.png">
+    <div class="app-intro-text"><p>自分以外のみんなの予定（イベント）も見ることができる！</p></div>
+  </div>
+  <div class="app-intro">
+    <img class="app-intro-img1" src="/images/exam-3.png">
+    <div class="app-intro-text"><p>イベント関する詳細の確認や、メッセージを送ることもできる！イベントのブックマークや参加するかどうかもここで決めることができるよ！</p></div>
+  </div>
+  <div class="app-intro">
+    <img class="app-intro-img1" src="/images/exam-4.png">
+    <div class="app-intro-text"><p>ユーザーのアイコンからtwitterやfacebookアカウントへリンク！すぐに繋がれる！</p></div>
+  </div>
+  <div class="app-intro">
+    <img class="app-intro-img1" src="/images/surf-snow.png">
+    <div class="app-intro-text"><p>国内最大級のスキー場・積雪情報サイト「SURF & SNOW」から最新のゲレンデ情報もゲットできちゃう！</p></div>
+  </div>
+</div>
+
+
+
+<!-- クリックでtopに戻るボール -->
+<div id="scroll__top" class="scrollTop__ball">
+  <p>Hello!</p>
+  <i class="fas fa-snowman faa-float animated"></i>
+  <div class="ball__shadow"></div>
+  <a href="#" title="">Top</a>
+</div>
+
+<script>
+
+  $(document).ready( function(){
+    $('#scroll__top').hide();
+  });
+
+
+  $(function(){
+    $('a[href^="#"]').click(function(){
+      //スクロールの速度
+      var speed = 300;
+      var href = $(this).attr("href");
+      var target = $(href == "#" || href == "" ? 'html' : href);
+      var position = target.offset().top;
+      $('body,html').animate({scrollTop:position}, speed, 'swing');
+      return false;
+    });
+  });
+
+  $(function(){
+    $('#scroll__ball').click(function(){
+      //スクロールの速度
+      var speed = 300;
+      var href = $(this).attr("href");
+      var target = $(href == "#" || href == "" ? 'html' : href);
+      var position = target.offset().top;
+      $('body,html').animate({scrollTop:position}, speed, 'swing');
+      return false;
+    });
+  });
+
+  // scrol__topボールの表示／非表示
+  $(function(){
+    $(window).on("scroll", function (){
+      if ($(this).scrollTop() > 300) {
+        $("#scroll__top").fadeIn(300);
+      } else {
+        $("#scroll__top").fadeOut(300);
+      }
+    })
+  })
+
+
+</script>
+
+
+

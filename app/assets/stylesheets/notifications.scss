@@ -1,0 +1,43 @@
+// Place all the styles related to the notifications controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.n-main-wrapper{
+	width: 60%;
+	margin: 0 auto;
+}
+.n-main-wrapper > p{
+	text-align: center;
+	padding: 5px 10px;
+	color: #efefef;
+	background-color: gray;
+}
+.news-wrapper,
+.olds-wrapper{
+	margin-bottom: 10px;
+	border: solid 1px #dedede;
+}
+.news-wrapper  p,
+.olds-wrapper  p{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	font-size: 0.8rem;
+	padding: 10px 20px;
+	border-bottom: solid 1px #dedede;
+	background-color: #efefef;
+}
+.news-wrapper span,
+.olds-wrapper span{
+	font-size: 0.7rem;
+	padding: 2px 5px;
+	margin: auto 0;
+	background-color: gray;
+	color: #dedede;
+	border-radius: 30px;
+}
+.news-wrapper  p:hover,
+.olds-wrapper  p:hover{
+	background-color: #dedede;
+}

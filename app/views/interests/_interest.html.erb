@@ -1,0 +1,35 @@
+<!-- イベント投稿一覧表示のテンプレート -->
+<div class="event-box box-shadow">
+<span class="posted-date">投稿日:<%= interest.event.created_at.strftime("%-m月%-d日") %></span>
+	<!-- 新規投稿ラベル -->
+	<%= render "events/new_label" if interest.event.new_arrival?%>
+	<!-- 新規投稿ラベルend -->
+
+	<div class="box-style-block">
+		<%= link_to image_tag(interest.event.user.thumbnail_id.gsub(/_normal/, ""), class: "event-user-image"), "#{interest.event.user.provider_url}", target: "_blank" %>
+		<p><%= interest.event.user.nickname %></p>
+	</div>
+	<div class="event-info">
+		<table class="event-status">
+			<tr>
+				<td class="text-right">エリア：</td>
+				<td class="text-centering"><%= interest.event.area.name %></td>
+			</tr>
+			<tr>
+				<td class="text-right">日程：</td>
+				<td class="text-centering"><%= interest.event.date.strftime("%Y年 %-m月 %-d日　(%a)") %></td>
+			</tr>
+		</table>
+		<p class="event-title ellipsis">
+			<%= link_to user_event_path(interest.event.user_id ,interest.event.id) do %>
+			<%= interest.event.title %>
+			<% end %>
+		</p>
+		<div class="event-description ellipsis">
+			<%= interest.event.description %>
+		</div>
+		<div class="join-count-box">
+			<p>参加者：<%= interest.event.joins.count %>人</p>
+		</div>
+	</div>
+</div>

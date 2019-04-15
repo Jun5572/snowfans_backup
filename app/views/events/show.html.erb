@@ -1,0 +1,82 @@
+	<div class="content-wrapper">
+		<div class="event-info-wrapper">
+			<h2 class="title"><%= @event.title %></h2>
+			<table>
+				<tbody>
+					<tr>
+						<th class="t-head">詳細</th>
+						<td class="t-data"><%= @event.description %></td>
+					</tr>
+					<tr>
+						<th class="t-head">日程</th>
+						<td class="t-data"><%= @event.date.strftime("%Y年 %-m月 %d日 (%a)") %></td>
+					</tr>
+					<tr>
+						<th class="t-head">エリア</th>
+						<td class="t-data"><%= @event.area.name %></td>
+					</tr>
+					<tr>
+						<th class="t-head">URL</th>
+						<td class="t-data"><%= @event.url %></td>
+					</tr>
+					<tr>
+						<th class="t-head">参加者</th>
+						<td class="t-data">
+							<%= render partial: "events/join", collection: @event.joins %>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<% unless @event.user == current_user %>
+				<div class="text-centering">
+						<% if @event.join?(current_user) %>
+							<%= link_to event_join_path(@event.id), method: :delete, data: {confirm: "イベント参加をキャンセルします。よろしいですか？"} do %>
+								<div class="button join box-shadow"><p>参加をやめる</p></div>
+							<% end %>
+						<% else %>
+							<%= link_to event_join_path(@event.id), method: :post, data: {confirm: "イベントに参加します。よろしいですか？"} do %>
+								<div class="button join box-shadow"><p>参加する</p></div>
+							<% end %>
+						<% end %>
+
+						<% if @event.checked?(current_user) %>
+							<%= link_to event_interest_path(@event.id), method: :delete do %>
+								<div class="button interest box-shadow"><p><i class="fas fa-check"></i>Unclip</p></div>
+							<% end %>
+						<% else %>
+							<%= link_to event_interest_path(@event.id), method: :post do %>
+								<div class="button uninterest box-shadow"><p><i class="fas fa-check"></i>Clip</p></div>
+							<% end %>
+						<% end %>
+				</div>
+				<div class="organizer text-centering">投稿ユーザー情報</div>
+				<div class="organizer-info-box">
+					<div class="organizer-introduction2">
+						<%= link_to "#{@user.nickname}さんの他の予定をチェック", user_path(@user.id), class: "event-index" unless @user == current_user %>
+						<%= link_to image_tag(@user.thumbnail_id.gsub(/_normal/, ""), class: "organizer-image"), "#{@user.provider_url}", target: "_blank" %>
+						<p class="introduce-text"><%= auto_link(@user.description, html: {target: "_blank"}) %></p>
+					</div>
+				</div>
+			<% end %>
+		</div>
+		<div class="comments-wrapper">
+			<div id="chat" class="view-comments-box">
+				<% @comments.each do |comment| %>
+					<% if comment.user_id == current_user.id %>
+						<%= render "comments/send", comment: comment %>
+					<% else %>
+						<%= render "comments/receive", comment: comment %>
+					<% end %>
+				<% end %>
+			</div>
+			<%= form_for(@comment, url: event_comments_path(@event.id), method: :post) do |f|%>
+				<%= f.text_area :body, class: "comment-box"%>
+				<%= f.submit "送信", class: "button positive box-shadow send" %>
+			<% end %>
+		</div>
+	</div>
+
+<script>
+    // 一番下までスクロールする
+    $('#chat').animate({scrollTop: $('#chat')[0].scrollHeight}, 'fast');
+</script>

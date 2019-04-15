@@ -1,0 +1,54 @@
+<div class="grid-container">
+  <div class="grid-item-main">
+    <% if @user == current_user %>
+    <div class="sub-nav">
+      <%= link_to "クリップボード", check_list_user_path(current_user), data: { page: "clips" }, class: "tab_menu" %>
+      <%= link_to "参加予定", join_list_user_path(current_user), data: { page: "joins" }, class: "tab_menu" %>
+      <%= link_to "自分の予定", user_path(current_user), data: { page: "plans" }, class: "tab_menu" %>
+    </div>
+    <% end %>
+    <div class="everyone">
+      <% if @path.is('users#check_lists') %>
+      <p><i class="fas fa-check"></i>クリップボード<i class="fas fa-check"></i></p>
+      <% elsif @path.is('users#join_lists') %>
+      <p><i class="fas fa-snowboarding"></i>参加予定イベント<i class="fas fa-skiing"></i></p>
+      <% else %>
+      <p><%= @user.nickname %>さんの予定</p>
+      <% end %>
+    </div>
+    <div class="events-wrapper">
+      <% if @path.is('users#check_lists') %>
+      <%= content_tag :p, "クリップボードに登録されたイベントがありません", class: "no_contents" if @interests.blank? %>
+      <%= render partial: "interests/interest", collection: @interests %>
+      <% elsif @path.is('users#join_lists') %>
+      <%= content_tag :p, "イベントが存在しません", class: "no_contents" if @joins.blank? %>
+      <%= render partial: "joins/join", collection: @joins %>
+      <% else %>
+      <%= content_tag :p, "投稿したイベントがありません", class: "no_contents" if @events.blank? %>
+      <%= render partial: "users/event", collection: @events %>
+      <% end %>
+    </div>
+  </div>
+  <div class="grid-item-user">
+    <%= image_tag(@user.thumbnail_id.gsub(/_normal/, ""), class: "showpage-thumbnail")  %>
+    <p><%= @user.nickname %></p>
+    <div class="user-infomation">
+      <div class="user-introduction"><%= auto_link(simple_format(@user.description), html: { target: "_blank" }) %></div>
+      <table class="user-area-info">
+        <tr>
+          <td class="home-area">ホームエリア</td>
+        </tr>
+        <tr>
+          <td>
+            <% if @user.area_id.blank? %>
+            <p>登録されていません</p>
+            <% else %>
+            <p><%= @user.area.name %></p>
+            <% end %>
+          </td>
+        </tr>
+      </table>
+      <%= link_to "ホームエリアを設定する", edit_user_path(current_user.id), class: "box-shadow link-to-edit" if current_user.area_id == 9%>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="transmission-wrapper">
+	<div class="send-user">
+		<%= link_to image_tag(comment.user.thumbnail_id.gsub(/_normal/, ""), class: "user-icon"), "#{comment.user.provider_url}", target: "_blank" %>
+		<p><%= comment.user.nickname %></p>
+	</div>
+	<div class="comment transmission">
+		<p><%= auto_link(simple_format(comment.body), html: { target: "_blank"}) %></p>
+	</div>
+	<div class="receive-date">
+		<div><%= comment.created_at.strftime("%-m月%-d日") %></div>
+		<div><%= comment.created_at.strftime("%-H:%M") %></div>
+	</div>
+</div>

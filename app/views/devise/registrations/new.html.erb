@@ -1,0 +1,40 @@
+<div class="form-wrapper left">
+  <div class="form-box">
+    <h2 class="sign-in-title">新規登録</h2>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <p><%= devise_error_messages! %></p>
+
+      <div class="field email">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autofocus: false, autocomplete: "email" %>
+        <div class="underline"></div>
+      </div>
+
+      <div class="field password">
+        <%= f.label :password %>
+        <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %><br />
+        <%= f.password_field :password %>
+        <div class="underline"></div>
+      </div>
+
+      <div class="field password">
+        <%= f.label :password_confirmation %><br />
+        <%= f.password_field :password_confirmation %>
+        <div class="underline"></div>
+      </div>
+
+      <div class="">
+        <%= f.submit "ユーザー登録", class: "sign-up-style box-shadow" %>
+      </div>
+    <% end %>
+    <p class="sns-button twitter box-shadow"><i class="fab fa-twitter"></i><span class="en">twitter</span>アカウントで新規登録</p>
+    <p class="sns-button facebook box-shadow"><i class="fab fa-facebook-f"></i><span class="en">facebook</span>アカウントで新規登録</p>
+  </div>
+    <%= render "devise/shared/links" %>
+</div>
+<div class="image-wrapper right">
+  <img class="sign-in-background" src="/images/sample-image.jpg">
+</div>
+

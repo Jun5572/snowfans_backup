@@ -1,0 +1,36 @@
+<div class="everyone">
+	お知らせ一覧
+</div>
+<div class="n-main-wrapper">
+	<p>新着</p>
+	<div class="news-wrapper">
+		<% @notifications.where(check: false).order(created_at: :desc).each do |n| %>
+			<%= link_to link_through_path(n.id) do %>
+				<% if n.notification_type == "コメント" %>
+					<p><b><%= n.notice_user.nickname %></b>さんがコメントしました<span><%= n.created_at.strftime("%-m月%d日") %></span></p>
+				<% elsif n.notification_type == "参加" %>
+					<p><b><%= n.notice_user.nickname %></b>さんがイベント参加予定です！<span><%= n.created_at.strftime("%-m月%d日") %></span></p>
+				<% elsif n.notification_type == "#{n.user.area.name}" %>
+					<p><%= n.notification_type %>エリアの新しいイベントが投稿されました！<span><%= n.created_at.strftime("%-m月%d日") %></span></p>
+				<% end %>
+			<% end %>
+		<% end %>
+	</div>
+	<p>過去</p>
+	<div class="olds-wrapper">
+		<% @notifications.where(check: true).order(created_at: :desc).each do |n| %>
+			<%= link_to link_through_path(n.id) do %>
+				<% if n.notification_type == "コメント" %>
+					<p><%= n.notice_user.nickname %>さんがコメントしました<span><%= n.created_at.strftime("%-m月%d日") %></span></p>
+				<% elsif n.notification_type == "参加" %>
+					<p><%= n.notice_user.nickname %>さんがイベント参加予定です！<span><%= n.created_at.strftime("%-m月%d日") %></span></p>
+				<% elsif n.notification_type == "#{n.user.area.name}" %>
+					<p><%= n.notification_type %>エリアの新しいイベントが投稿されました！<span><%= n.created_at.strftime("%-m月%d日") %></span></p>
+				<% end %>
+			<% end %>
+		<% end %>
+	</div>
+</div>
+<div class="events-wrapper">
+		
+</div>

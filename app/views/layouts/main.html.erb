@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>main</title>
+		<%= csrf_meta_tags %>
+		<%= csp_meta_tag %>
+		<%= favicon_link_tag '/images/snowfans_logo.png'%>
+		<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+		<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+		<!-- <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c" rel="stylesheet"> -->
+		<link href="https://fonts.googleapis.com/css?family=Anton|Noto+Sans+JP" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Chakra+Petch" rel="stylesheet">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.0.10/font-awesome-animation.css" type="text/css" media="all" />
+
+		<!-- <link rel='stylesheet' href='fullcalendar/fullcalendar.css' /> -->
+		<!-- <script
+			src="https://code.jquery.com/jquery-3.3.1.min.js"
+			integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+			crossorigin="anonymous">
+		</script> -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script href="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		<!-- <script src="semantic/dist/semantic.min.js"></script> -->
+		<!-- <script src='lib/jquery.min.js'></script> -->
+	</head>
+
+	<body data-current_page="<%= @page %>">
+
+	<!-- ロード画面描画コンポーネント -->
+	<%#= render "layouts/loading_page" %>
+
+		<header id="header" class="">
+			<% if user_signed_in? %>
+				<nav class="global-nav">
+					<ul>
+						<%= link_to root_path do %>
+							<img class="app-logo" src="/images/snowfans-logo.png">
+						<% end %>
+						<div class="nav-box">
+							<li class="nav-list">
+								</i><%= link_to  "全国のゲレンデ情報をCheck!", "https://snow.gnavi.co.jp/", target: "_blank" %>
+							</li>
+							<li class="nav-list"><%= link_to "みんなの予定", root_path, data: { page: "index narrow_down" }, class:"header_menu" %></li>
+							<li class="nav-list"><%= link_to "予定を作成", new_event_path, data: { page: "new" }, class:"header_menu" %></li>
+						</div>
+            <!-- ログイン中のユーザーアイコン -->
+						<li class="provider-link">
+							<%= link_to user_path(current_user.id), data: { page: "plans joins clips" } do %>
+								<div class="loginuser">
+									<div class="loginuser-name ellipsis"><%= current_user.nickname %></div>
+									<%= image_tag(current_user.thumbnail_id) %>
+								</div>
+							<% end %>
+						</li>
+            <!-- ログイン中のユーザーアイコンend -->
+						<li class="button">
+							<%= link_to edit_user_path(current_user), data: { page: "profile_setting" } do %>
+								<i class="fas fa-cogs"></i>
+							<% end %>
+						</li>
+						<!-- お知らせアイコン -->
+						<li class="notification-bell">
+							<i class="far fa-bell"><span class="notification-count"><%= current_user.notifications.where(check: false).count %></span></i>
+						</li>
+						<!-- お知らせアイコンend -->
+						<li><%= link_to "Sign out", destroy_user_session_path, class: "button sign-out", method: :delete, data: { confirm: "サインアウトします。よろしいですか？" }%></li>
+					</ul>
+				</nav>
+			<% end %>
+		</header><!-- /header -->
+		<% unless current_user.notifications.where(check: false).blank? %>
+			<ul class="notifications-wrapper box-shadow">
+		  		<li class="notifications-box">
+			        <p class="init-bottom">新着お知らせ<%= current_user.notifications.where(check: false).count %>件</p>
+			        <ul class="notifications-list">
+			        	<% current_user.notifications.where(check: false).first(5).each do |n| %>
+			            <li>
+			            	<%= link_to link_through_path(n.id) do %>
+				            	<% if n.notification_type == "コメント" %>
+				            		<p><b><%= n.notice_user.nickname %></b>さんがコメントしました</p>
+				            	<% elsif n.notification_type == "参加" %>
+				            		<p><%= n.notice_user.nickname %>さんがイベント参加予定です！</p>
+				            	<% end %>
+				            <% end %>
+				            <% if n.notification_type == "#{n.user.area.name}" %>
+					            <%= link_to link_through_path(n.id) do%>
+					            	<p><%= n.notification_type %>エリアの新しいイベントが投稿されました！</p>
+					            <% end %>
+				            <% end %>
+			            </li>
+			          <% end %>
+		          	<p><%= link_to "過去を見る", user_notifications_path(current_user.id) %></p>
+		          	<% if current_user.notifications.where( check: false ).count > 5 %>
+		          		<p><%= link_to "全て見る", events_path %></p>
+		          	<% end %>
+			        </ul>
+			    </li>
+			</ul>
+		<% end %><!-- end unless -->
+
+		<main>
+			<div class="main-wrapper">
+				<div id="flash" class="text-centering"><%= render "layouts/flash_messages" %></div>
+				<%= yield %>
+			</div>
+		</main>
+		<footer id="footer">
+			<div class="footer-nav-box">
+				<li></i><%= link_to  "全国のゲレンデ情報をCheck!", "https://snow.gnavi.co.jp/", target: "_blank" %></li>
+				<li><%= link_to "みんなの予定", root_path %></li>
+				<li><%= link_to "予定を投稿", new_event_path %></li>
+				<li><%= link_to "自分のイベントを管理", user_path(current_user.id) %></li>
+				<li><%= link_to "お知らせを見る", user_notifications_path(current_user.id) %></li>
+				<li><%= link_to "プライバシーポリシー", privacy_policy_path(current_user.id) %></li>
+			</div>
+			<p>Copyright ©︎<span class="entrance-font">Snowfans</span>All Right Reserved.</p>
+		</footer>
+
+		<script>
+			// flashメッセージfadeOut
+			$(function(){
+				setTimeout(function(){
+					$('#flash').fadeOut(1000);
+				}, 2000);
+			});
+
+
+	      // users#showのタブメニュー切り替え時のcss変更
+	      $(function(){
+	        var current_page = $('[data-current_page]').data('current_page');
+	        if ( current_page == "profile_setting"){
+	        	$(`[data-page~="${current_page}"]`).children("i").css({'background-color': 'orangered', 'color': '#ffffff' });
+	        } else {
+	        	$(`[data-page~="${current_page}"]`).addClass('is_active');
+	    	}
+	      });
+    	</script>
+	</body>
+</html>

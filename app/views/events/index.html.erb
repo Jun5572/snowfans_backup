@@ -1,0 +1,33 @@
+<div class="everyone">
+	<% if @path.is('events#narrow_down') %>
+		<p><%= current_user.area.name %>エリアで絞り込み中</p>
+	<% else %>
+		<p>みんなの予定</p>
+	<% end %>
+</div>
+<div class="text-centering">
+	<% unless current_user.area.code == 99 %>
+		<% if @path.is('events#narrow_down') %>
+			<%= link_to events_path do %>
+			<div class="button view-all box-shadow"><p>絞り込み解除</p></div>
+			<% end %>
+		<% else %>
+			<%= link_to narrow_down_events_path do %>
+			<div class="button search-area-style box-shadow"><p>ホームエリア(<%= current_user.area.name %>)で絞り込み</p></div>
+			<% end %>
+		<% end %>
+	<% else %>
+		<p>ホームエリアを設定すると、そのエリアで絞り込み検索ができるようになります</p>
+		<%= link_to edit_user_path(current_user.id) do %>
+			<p class="button search-area-style box-shadow">ホームエリアを設定する</p>
+		<% end %>
+	<% end %>
+</div>
+<div class="events-wrapper">
+		<% if @events.count == 0 %>
+			<p class="non_event"><i class="fas fa-snowman"></i>現在投稿がありません<i class="fas fa-snowman"></i></p>
+		<% else %>
+			<%= render @events %>
+		<% end %>
+</div>
+

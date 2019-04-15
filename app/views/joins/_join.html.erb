@@ -1,0 +1,38 @@
+<!-- イベント投稿一覧表示のテンプレート -->
+<% if join.event.date >= Date.today %>
+<div class="event-box box-shadow">
+	<span class="posted-date">投稿日:<%= join.event.created_at.strftime("%-m月%-d日") %></span>
+	<!-- 新規投稿ラベル -->
+	<%= render "events/new_label" if join.event.new_arrival? %>
+	<!-- 新規投稿ラベルend -->
+
+	<div class="box-style-block">
+		<%= link_to image_tag(join.event.user.thumbnail_id.gsub(/_normal/, ""), class: "event-user-image"), "#{join.event.user.provider_url}", target: "_blank" %>
+		<p><%= join.event.user.nickname %></p>
+	</div>
+	<div class="event-info">
+		<table class="event-status">
+			<tr>
+				<td class="text-right">エリア：</td>
+				<td class="text-centering"><%= join.event.area.name %></td>
+			</tr>
+			<tr>
+				<td class="text-right">日程：</td>
+				<td class="text-centering"><%= join.event.date.strftime("%Y年 %-m月 %-d日　(%a)") %></td>
+			</tr>
+		</table>
+		<p class="event-title ellipsis">
+			<%= link_to user_event_path(join.event.user_id ,join.event.id) do %>
+			<%= join.event.title %>
+			<% end %>
+		</p>
+		<div class="event-description ellipsis">
+			<%= join.event.description %>
+		</div>
+		<div class="join-count-box">
+			<p>参加者：<%= join.event.joins.count %>人</p>
+		</div>
+	</div>
+</div>
+<% end %>
+

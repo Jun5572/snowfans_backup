@@ -1,0 +1,376 @@
+.flash__message{
+	position: fixed;
+	top: 80px;
+	width: 100%;
+	padding: 10px 0;
+	color: #efefef;
+	z-index: 3000;
+	box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.5);
+}
+.notice{
+	background-color: #16b164;
+}
+.error{
+	background-color: red;
+}
+.first-welcome, .welcome{
+	background-color: orangered;
+}
+header{
+	position: fixed;
+	top: 0;
+	left: 0;
+    width: 100%;
+    color: #f7f6f5;
+    background-color:  #242425;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+    z-index: 3000;
+  }
+
+footer{
+	position: relative;
+	width: 100%;
+	height: 200px;
+	color: #242425;
+	background-color:  #dedede;
+	box-shadow: inset 0px 2px 2px #dedede;
+	border-top: solid 1px rgba(0, 0, 0, 0.2);
+	filter: drop-shadow();
+	z-index: 9999;
+}
+footer p,
+footer li{
+	text-align: center;
+	font-size: 0.7rem;
+	padding: 20px;
+	margin-top: 10px;
+}
+.footer-nav-box{
+	display: flex;
+	justify-content: center;
+	list-style: none;
+}
+main{
+	position: relative;
+	background-color: #ffff;
+	padding-top: 80px;
+	min-height: 100vh;
+}
+main::after{
+	position: absolute;
+	content: "";
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: url("/images/polygon-background3.jpg");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	opacity: 0.3;
+	z-index: 0;
+}
+main *{
+	z-index: 1;
+}
+nav ul {
+    list-style:none;
+}
+nav li{
+	vertical-align: middle;
+	display: inline-block;
+}
+
+.main-wrapper{
+	position: relative;
+	z-index: 1;
+}
+.app-logo{
+    position: absolute;
+    top: 2px;
+    left: 20px;
+    width: 150px;
+    height: 75px;
+}
+.global-nav{
+	width: 95%;
+	text-align: right;
+	margin: 0 auto;
+	/*padding: 4px 0;*/
+}
+.global-nav a{
+	display: flex;
+}
+
+.provider-link a{
+	position: relative;
+	display: flex;
+	padding: 5px 5px;
+	background-color: transparent;
+	transition: 100ms;
+}
+.provider-link a::before{
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 3px;
+	background-color: orangered;
+	transform: scale(0);
+	transition: all 200ms ease-in-out;
+}
+.provider-link a:hover::before{
+	/*border-bottom: 2px solid orangered;*/
+	background-color: orangered;
+	transform: scale(1);
+}
+
+.loginuser img{
+	border-radius: 50%;
+}
+
+.nav-box{
+	display: inline-block;
+	margin: 10px 50px;
+}
+.nav-list a{
+	display: inline-block;
+	position: relative;
+	padding: 19px 10px;
+	color: #dedede;
+	font-size: 0.8rem;
+	transition: 100ms;
+}
+.nav-list a::before,
+.nav-list a.is_active::before{
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 3px;
+	background-color: orangered;
+	transform: scale(0);
+	transition: all 200ms ease-in-out;
+}
+/* hover時の処理が優先される */
+.nav-list a:hover{
+		color: #dedede;
+}
+.nav-list a:hover::before,
+.nav-list a.is_active::before,
+.provider-link a.is_active::before{
+	transform: scale(1);
+	transition: all 200ms ease-in-out;
+}
+
+.notification-bell{
+	position: relative;
+	margin: 0 5px;
+}
+.notification-bell span{
+	position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 0.5rem;
+    text-align: center;
+    font-weight: bold;
+    color: #efefef;
+    background-color: red;
+    border-radius: 50%;
+}
+
+.notifications-wrapper {
+    position: fixed;
+    top: 85px;
+    right: 0;
+    width: 100%;
+    height: 40px;
+    max-width: 150px;
+    margin: 0 auto;
+    list-style: none;
+    font-size: 0.8rem;
+    z-index: 1000;
+}
+.notifications-wrapper:hover{
+	max-width: 300px;
+}
+
+.notifications-wrapper > li {
+    float: left;
+    width: 100%; /* グローバルナビ4つの場合 */
+    /*height: 50px;*/
+    line-height: 40px;
+    background-color: lightgray;
+}
+
+.notifications-wrapper > li p {
+	text-align: center;
+    display: block;
+    /*color: #fff;*/
+}
+
+.notifications-wrapper > li p:hover {
+	/*background-color: #efefef;*/
+    /*color: #999;*/
+}
+
+ul.notifications-list {
+	display: block;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 1;
+}
+
+.notifications-wrapper > li:hover {
+    background-color: lightgray;
+    -webkit-transition: all .5s;
+    transition: all .5s;
+}
+
+.notifications-list li {
+	font-size: 0.6rem;
+	;list-style: none;
+    /*border-top: 1px solid #111;*/
+}
+.notifications-list li:hover{
+	background-color: #efefef;
+}
+.menu__third-level li {
+    border-top: 1px solid #111;
+}
+
+.notifications-box li p:hover {
+    /*background: #efefef;*/
+}
+
+/* 下矢印 */
+.init-bottom:before {
+    content: '◀︎';
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    transition: all 500ms;
+    /*width: 6px;
+    height: 6px;*/
+    /*margin: 0 0 0 15px;
+    border-right: 1px solid gray;
+    border-bottom: 1px solid gray;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);*/
+}
+.init-bottom:hover:before{
+	transform: rotate(180deg);
+}
+
+/* floatクリア */
+.notifications-wrapper:before,
+.notifications-wrapper:after {
+    content: " ";
+    display: table;
+}
+
+.notifications-wrapper:after {
+    clear: both;
+}
+
+.notifications-wrapper {
+    *zoom: 1;
+}
+
+
+
+.notifications-wrapper > li.notifications-box {
+    position: relative;
+}
+
+li.notifications-box ul.notifications-list {
+    position: absolute;
+    top: 40px;
+    width: 100%;
+    background-color: white;
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease;
+}
+
+li.notifications-box:hover ul.notifications-list {
+    top: 40px;
+    visibility: visible;
+    opacity: 1;
+    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+
+.sign-out{
+	margin-left: 50px;
+	padding: 3px 10px;
+	background-color: #d4d9df;
+	font-size: 0.8rem;
+	color: #504946;
+}
+.loginuser{
+	display: flex;
+}
+
+.loginuser-name{
+	max-width: 110px;
+	line-height: 48px;
+    font-size: 0.8rem;
+    color: #efefef;
+    margin: 0 5px;
+}
+.loginuser-icon{
+	width: 48px;
+}
+
+.privacy__policy--wrapper{
+
+}
+.policy--head{
+	position: fixed;
+	display: block;
+	top: 80px;
+	width: 100%;
+	z-index: 1000;
+}
+section.privacy__policy{
+	position: sticky;
+	top: 250px;
+	width: 100%;
+	min-height: 100vh;
+}
+section.privacy__policy:nth-child(even){
+	background-color: #fff;
+}
+section.privacy__policy:nth-child(odd){
+	background-color: aliceblue;
+}
+section.privacy__policy:last-child{
+	height: 300px;
+	z-index: 2000;
+}
+section.policy--head h2, section.privacy__policy h2{
+	margin: 0 0 20px 20px;
+	padding-top: 20px;
+	font-size: 1.5rem;
+}
+section.policy--head p,
+section.privacy__policy p,
+section.privacy__policy ul{
+	width: 80%;
+	margin: 0 auto;
+}
+section.privacy__policy ul{
+	margin-bottom: 20px;
+	font-size: 0.8rem;
+}
+section.privacy__policy ul li{
+	margin: 0 0 0 30px;
+}

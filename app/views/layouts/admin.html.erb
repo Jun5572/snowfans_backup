@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>main</title>
+		<%= csrf_meta_tags %>
+		<%= csp_meta_tag %>
+		<%= favicon_link_tag '/images/snowfans_logo.png'%>
+		<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+		<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+		<link href="https://fonts.googleapis.com/css?family=Anton|Noto+Sans+JP" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Chakra+Petch" rel="stylesheet">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.0.10/font-awesome-animation.css" type="text/css" media="all" />
+		<!-- ------------------------------------------------------------- -->
+		<!-- gem fullcalendarに必要なscriptはここに記述 -->
+		<!-- ------------------------------------------------------------- -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script href="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	</head>
+
+	<body data-current_page="<%= @page %>">
+		<header id="header" class="">
+			<% if admin_signed_in? %>
+				<nav class="global-nav">
+					<!-- ここに管理画面のメニューを記述 -->
+				</nav>
+			<% end %>
+		</header><!-- /header -->
+		<main class="admin_wrapper">
+			<div class="main-wrapper">
+				<div id="flash" class="text-centering"><%= render "layouts/flash_messages" %></div>
+				<%= yield %>
+			</div>
+		</main>
+		<footer id="footer">
+			<div class="footer-nav-box">
+
+			</div>
+			<p>Copyright ©︎<span class="entrance-font">Snowfans</span>All Right Reserved.</p>
+		</footer>
+	</body>
+</html>
